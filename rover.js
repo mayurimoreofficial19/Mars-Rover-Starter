@@ -11,10 +11,8 @@ class Rover {
 
   receiveMessage(message) {
     message.name = "Test message with two commands";
-
     return message.name;
   }
 }
-//let response = receiveMessage(message);
 
 module.exports = Rover;
