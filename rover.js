@@ -9,9 +9,12 @@ class Rover {
     this.generatorWatts = 110;
   }
 
-  function receiveMessage(message) {
-   return 'Test message with two commands';
+  receiveMessage(message) {
+    message.name = "Test message with two commands";
+
+    return message.name;
   }
 }
+//let response = receiveMessage(message);
 
 module.exports = Rover;

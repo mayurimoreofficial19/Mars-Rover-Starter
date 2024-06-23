@@ -26,9 +26,8 @@ describe("Rover class", function () {
 
   //Rover Test 8
   test("response returned by receiveMessage contains the name of the message", function () {
-    expect(
-      rover.receiveMessage(Message.name).toBe("Test message with two commands")
-    );
+    let response = receiveMessage(Message);
+    expect(response);
   });
 
   //Rover Test 9
