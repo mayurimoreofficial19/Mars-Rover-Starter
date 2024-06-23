@@ -9,10 +9,4 @@ class Message {
   }
 }
 
-// let command = [
-//   new command("MODE_CHANGE", "LOW_POWER"),
-//   new command("STATUS_CHECK"),
-// ];
-// let message = new message("Test message with two commands", command);
-
 module.exports = Message;
