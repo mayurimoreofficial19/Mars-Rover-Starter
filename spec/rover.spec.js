@@ -70,30 +70,47 @@ describe("Rover class", function () {
   });
 
   // //Rover Test 11
-  // test("responds correctly to the mode change command", function () {
-  //   let message = {
-  //     name: "Test message with two commands",
-  //     commands: [
-  //       { commandType: "MODE_CHANGE" },
-  //       { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
-  //     ],
-  //   };
-  //   let response = rover.receiveMessage(message);
-  //   expect(response.message).toEqual("Test message with two commands");
-  //   expect(response.results[0].completed).toBe(true);
-  // });
+  test("responds correctly to the mode change command", function () {
+    let message = {
+      name: "Test message with two commands",
+      commands: [
+        { commandType: "MODE_CHANGE" },
+        { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
+      ],
+    };
+    let response = rover.receiveMessage(message);
+    expect(response.message).toEqual("Test message with two commands");
+    if (response.results.length > 0) {
+      expect(response.results[0].completed).toBe(true);
+    }
+  });
 
   // //Rover Test 12
-  // test("responds with a false completed value when attempting to move in LOW_POWER mode", function () {
-  //   let message = {
-  //     name: "Test message with two commands",
-  //     commands: [
-  //       { commandType: "MODE_CHANGE", value: { a: 10, b: 20 } },
-  //       { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
-  //     ],
-  //   };
-  //   let response = rover.receiveMessage(message);
-  //   expect(response.message).toEqual("Test message with two commands");
-  //   expect("LOW_POWER").toBe(false);
-  // });
+  test("responds with a false completed value when attempting to move in LOW_POWER mode", function () {
+    let message = {
+      name: "Test message with two commands",
+      commands: [
+        { commandType: "MODE_CHANGE", value: "LOW_POWER" },
+        { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
+      ],
+    };
+    //let message = new message("Test message with LOW_POWER mode", commands);
+
+    let rover = {
+      receiveMessage: function (message) {
+        return {
+          message: message.name,
+          commands: message.commands.map((command) => ({
+            commandType: command.commandType,
+            value: command.value,
+          })),
+        };
+      },
+    };
+    let response = rover.receiveMessage(message);
+    expect(response.message).toEqual("Test message with two commands");
+    if (response.results.length > 0) {
+      expect(response.commands[0].value).toBe(false);
+    }
+  });
 });

@@ -30,6 +30,10 @@ class Rover {
             position: this.position,
           },
         });
+      } else if (commands[index].commandType == "MODE_CHANGE") {
+        results.push({ completed: true });
+      } else if (commands[index].value == "LOW_POWER") {
+        results.push({ completed: false });
       }
     }
     let response = { message: message.name, results: results };
