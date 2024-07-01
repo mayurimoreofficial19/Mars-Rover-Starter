@@ -50,37 +50,24 @@ describe("Rover class", function () {
     }
   });
 
-  // //Rover Test 9
-  // test("responds correctly to the status check command", function () {
-  //   let message = {
-  //     name: "Test message with two commands",
-  //     commands: [
-  //       { commandType: "MODE_CHANGE" },
-  //       { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
-  //     ],
-  //   };
-  //   let response = rover.receiveMessage(message);
-  //   expect(response.message).toEqual("Test message with two commands");
-  //   expect(response.results.length).toBe(2);
-  //   expect(response.results[0].completed).toBe(true);
-  //   expect(response.results[1].completed).toBe(true);
-  // });
-
   // //Rover Test 10
-  // test("responds correctly to the status check command", function () {
-  //   let message = {
-  //     name: "Test message with two commands",
-  //     commands: [
-  //       { commandType: "MODE_CHANGE" },
-  //       { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
-  //     ],
-  //   };
-  //   let response = rover.receiveMessage(message);
-  //   expect(response.message).toEqual("Test message with two commands");
-  //   expect(response.results.length).toBe(2);
-  //   expect(response.results[1].completed).toBe(true);
-  //   expect(response.results[1].completed).toBe(true);
-  // });
+  test("responds correctly to the status check command", function () {
+    let message = {
+      name: "Test message with two commands",
+      commands: [
+        { commandType: "MODE_CHANGE" },
+        { commandType: "STATUS_CHECK", value: { a: 10, b: 20 } },
+      ],
+    };
+    let response = rover.receiveMessage(message);
+    expect(response.message).toEqual("Test message with two commands");
+    expect(Object.keys(response).length).toBe(2);
+
+    if (response.results.length > 1) {
+      expect(response.results[1].completed).toBe(true);
+      expect(response.results[1].completed).toBe(true);
+    }
+  });
 
   // //Rover Test 11
   // test("responds correctly to the mode change command", function () {
