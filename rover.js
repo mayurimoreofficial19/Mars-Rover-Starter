@@ -1,3 +1,12 @@
+const Message = require("./message.js");
+const Command = require("./command.js");
+
+let commands = [
+  new Command("MODE_CHANGE", "LOW_POWER"),
+  new Command("STATUS_CHECK"),
+];
+let message = new Message("Test message with two commands", commands);
+
 class Rover {
   // Write code here!
   constructor(position) {
@@ -10,9 +19,28 @@ class Rover {
   }
 
   receiveMessage(message) {
-    message.name = "Test message with two commands";
-    return message.name;
+    let results = [];
+    for (let index = 0; index < Command.length; index++) {
+      if (commands[index].commandType == "STATUS_CHECK") {
+        results.push({
+          completed: true,
+          roverStatus: {
+            mode: this.mode,
+            generatorWatts: this.generatorWatts,
+            position: this.position,
+          },
+        });
+      }
+    }
+    let response = { message: message.name, results: results };
+    return response;
   }
 }
+
+let rover = new Rover(98382);
+
+let response = rover.receiveMessage(message);
+console.log("Object length : " + Object.keys(response).length);
+console.log(response);
 
 module.exports = Rover;

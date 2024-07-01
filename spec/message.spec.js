@@ -24,7 +24,7 @@ describe("Message class", function () {
   test("contains a commands array passed into the constructor as the 2nd argument", function () {
     expect(function () {
       new Message(Command);
-      Command = this.Command;
+      this.Command = Command;
     });
   });
 });
