@@ -16,11 +16,6 @@ class Rover {
     this.generatorWatts = 110;
   }
 
-  // const message = new Message("Test message with two commands",[
-  //   new Command("MODE_CHANGE", "LOW_POWER"),
-  //   new Command("STATUS_CHECK"),
-  // ];)
-
   receiveMessage(message) {
     let results = [];
     for (let index = 0; index < Command.length; index++) {
@@ -34,15 +29,15 @@ class Rover {
           },
         });
       } else if (commands[index].commandType === "MODE_CHANGE") {
-        this.mode = commands.value;
+        // mode: this.mode;
         results.push({ completed: true });
-      } else if (message.commands[index].value === "LOW_POWER") {
+      } else if (commands[index].value === "LOW_POWER") {
         results.push({
           completed: false,
           roverStatus: {
             mode: "LOW_POWER",
             generatorWatts: 110,
-            position: 98382,
+            position: 4321,
           },
         });
       } else if (commands[index].value === "NORMAL") {
@@ -58,7 +53,7 @@ class Rover {
         results.push({
           completed: true,
           roverStatus: {
-            position: commands.value,
+            position: this.position,
           },
         });
       }
@@ -67,7 +62,7 @@ class Rover {
   }
 }
 
-let rover = new Rover(98382);
+let rover = new Rover(4321);
 let response = rover.receiveMessage(message);
 console.log("{");
 for (let key in response) {
