@@ -7,14 +7,6 @@ const Command = require("../command.js");
 
 //let rover = new Rover({ a: 0, b: 0 });
 describe("Rover class", function () {
-  // 7 tests here!
-  // Rover Test 7
-  // test("throws error if a position is NOT passed into the constructor as the first parameter", function () {
-  //   expect(function () {
-  //     new Rover();
-  //   }).toThrow(new Error("position required."));
-  // });
-
   //Rover Test 7
   test("constructor sets position and default values for mode and generatorWatts", function () {
     const rover = new Rover(4321);
@@ -28,7 +20,7 @@ describe("Rover class", function () {
     const rover = new Rover(4321);
     let message = new Message("Test message with two commands");
     let response = rover.receiveMessage(message);
-    expect(response.message).toEqual("Test message with two commands");
+    expect(response.message).toBe("Test message with two commands");
   });
 
   // //Rover Test 9
@@ -53,14 +45,15 @@ describe("Rover class", function () {
     let message = new Message("Test message with two commands", commands);
     let response = rover.receiveMessage(message);
     expect(response.message).toEqual("Test message with two commands");
-    expect(Object.keys(response).length).toBe(2);
 
-    let roverStatus = response.results[1].roverStatus;
     if (response.mode === "STATUS_CHECK")
-      expect(response.results[0].completed).toBe(true);
-    expect(roverStatus.mode).toBe(rover.mode);
-    expect(roverStatus.generatorWatts).toBe(rover.generatorWatts);
-    expect(roverStatus.position).toBe(rover.position);
+      expect(response.results[0].completed).toEqual(true);
+    expect(response.results[1].roverStatus.mode).toEqual(rover.mode);
+    expect(response.results[1].roverStatus.generatorWatts).toEqual(
+      rover.generatorWatts
+    );
+    expect(response.results[1].roverStatus.position).toEqual(rover.position);
+    expect(response.results.length).toEqual(2);
   });
 
   //Rover Test 11
@@ -100,13 +93,13 @@ describe("Rover class", function () {
   test("responds with the position for the move command", function () {
     let message = {
       name: "Test message with two commands",
-      commands: [{ commandType: "MOVE", value: 4321 }],
+      commands: ("MOVE", 3215),
     };
     const rover = new Rover(4321);
     let response = rover.receiveMessage(message);
     expect(response.message).toEqual("Test message with two commands");
     if (response.commandType === "MOVE") {
-      expect(response.results[1].roverStatus.position).toBe(this.position);
+      expect(response.results[1].roverStatus.position).toBe(4321);
     }
   });
 });

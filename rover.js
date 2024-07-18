@@ -1,13 +1,6 @@
 const Message = require("./message.js");
 const Command = require("./command.js");
 
-let commands = [
-  new Command("MODE_CHANGE", "LOW_POWER"),
-  new Command("STATUS_CHECK"),
-];
-
-let message = new Message("Test message with two commands", commands);
-
 class Rover {
   // Write code here!
   constructor(position) {
@@ -18,7 +11,7 @@ class Rover {
 
   receiveMessage(message) {
     let results = [];
-    for (let index = 0; index < Command.length; index++) {
+    for (let index = 0; index < commands.length; index++) {
       if (commands[index].commandType === "STATUS_CHECK") {
         results.push({
           completed: true,
@@ -29,26 +22,12 @@ class Rover {
           },
         });
       } else if (commands[index].commandType === "MODE_CHANGE") {
-        // mode: this.mode;
         results.push({ completed: true });
       } else if (commands[index].value === "LOW_POWER") {
-        results.push({
-          completed: false,
-          roverStatus: {
-            mode: "LOW_POWER",
-            generatorWatts: 110,
-            position: 4321,
-          },
-        });
+        results.push({ completed: false });
+        this.mode = commands.value;
       } else if (commands[index].value === "NORMAL") {
-        results.push({
-          completed: true,
-          roverStatus: {
-            mode: "NORMAL",
-            generatorWatts: this.generatorWatts,
-            position: this.position,
-          },
-        });
+        results.push({ completed: true });
       } else if (commands[index].commandType === "MOVE") {
         results.push({
           completed: true,
@@ -62,14 +41,21 @@ class Rover {
   }
 }
 
+let commands = [
+  new Command("MODE_CHANGE", "LOW_POWER"),
+  new Command("STATUS_CHECK"),
+];
 let rover = new Rover(4321);
-let response = rover.receiveMessage(message);
+let message = new Message("Test message with two commands", commands);
+let responds = rover.receiveMessage(message);
+
 console.log("{");
-for (let key in response) {
-  if (response.hasOwnProperty(key)) {
-    console.log(key + " : ", response[key]);
-    //console.log(key, response[key]);
-  }
+for (let key in responds) {
+  console.log(key + " : ", responds[key]);
+  // if (responds.hasOwnProperty(key)) {
+  //   console.log(key + " : ", responds[key]);
+  //   //console.log(key, response[key]);
+  // }
 }
 console.log("}");
 
