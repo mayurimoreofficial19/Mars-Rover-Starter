@@ -37,21 +37,21 @@ class Rover {
   }
 }
 
-let commands = [
-  new Command("MOVE", 4321),
-  new Command("STATUS_CHECK"),
-  new Command("MODE_CHANGE", "LOW_POWER"),
-  new Command("MOVE", 3579),
-  new Command("STATUS_CHECK"),
-];
-
 // let commands = [
+//   new Command("MOVE", 4321),
+//   new Command("STATUS_CHECK"),
 //   new Command("MODE_CHANGE", "LOW_POWER"),
+//   new Command("MOVE", 3579),
 //   new Command("STATUS_CHECK"),
 // ];
+
+let commands = [
+  new Command("MODE_CHANGE", "LOW_POWER"),
+  new Command("STATUS_CHECK"),
+];
 let message = new Message("Test message with two commands", commands);
-//let rover = new Rover(98382);
-let rover = new Rover(100);
+let rover = new Rover(98382);
+//let rover = new Rover(100);
 let response = rover.receiveMessage(message);
 
 console.log("{");
