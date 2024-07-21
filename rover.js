@@ -11,30 +11,26 @@ class Rover {
 
   receiveMessage(message) {
     let results = [];
-    for (let index = 0; index < commands.length; index++) {
-      if (commands[index].commandType === "STATUS_CHECK") {
+    for (let index = 0; index < message.commands.length; index++) {
+      if (message.commands[index].commandType === "STATUS_CHECK") {
         results.push({
           completed: true,
           roverStatus: {
-            mode: this.mode,
-            generatorWatts: this.generatorWatts,
-            position: this.position,
+            mode: rover.mode,
+            generatorWatts: rover.generatorWatts,
+            position: rover.position,
           },
         });
-      } else if (commands[index].commandType === "MODE_CHANGE") {
+      } else if (message.commands[index].commandType === "MODE_CHANGE") {
         results.push({ completed: true });
-      } else if (commands[index].value === "LOW_POWER") {
-        results.push({ completed: false });
-        this.mode = commands.value;
-      } else if (commands[index].value === "NORMAL") {
-        results.push({ completed: true });
-      } else if (commands[index].commandType === "MOVE") {
-        results.push({
-          completed: true,
-          roverStatus: {
-            position: this.position,
-          },
-        });
+        this.mode = message.commands[index].value;
+      } else if (message.commands[index].commandType === "MOVE") {
+        if (this.mode === "NORMAL") {
+          this.position = message.commands[index].value;
+          results.push({ completed: true });
+        } else {
+          results.push({ completed: false });
+        }
       }
     }
     return { message: message.name, results: results };
@@ -42,20 +38,25 @@ class Rover {
 }
 
 let commands = [
+  new Command("MOVE", 4321),
+  new Command("STATUS_CHECK"),
   new Command("MODE_CHANGE", "LOW_POWER"),
+  new Command("MOVE", 3579),
   new Command("STATUS_CHECK"),
 ];
-let rover = new Rover(4321);
+
+// let commands = [
+//   new Command("MODE_CHANGE", "LOW_POWER"),
+//   new Command("STATUS_CHECK"),
+// ];
 let message = new Message("Test message with two commands", commands);
-let responds = rover.receiveMessage(message);
+//let rover = new Rover(98382);
+let rover = new Rover(100);
+let response = rover.receiveMessage(message);
 
 console.log("{");
-for (let key in responds) {
-  console.log(key + " : ", responds[key]);
-  // if (responds.hasOwnProperty(key)) {
-  //   console.log(key + " : ", responds[key]);
-  //   //console.log(key, response[key]);
-  // }
+for (let key in response) {
+  console.log(key + " : ", response[key]);
 }
 console.log("}");
 
