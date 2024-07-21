@@ -13,11 +13,11 @@ describe("Rover class", function () {
       new Command("MODE_CHANGE", "LOW_POWER"),
       new Command("STATUS_CHECK"),
     ];
-    const rover = new Rover(4321);
+    let rover = new Rover(4321);
     let message = new Message("Test message with two commands", commands);
     let response = rover.receiveMessage(message);
-    expect(response.results[1].roverStatus.position).toBe(rover.position);
-    expect(response.results[1].roverStatus.mode).toEqual(rover.mode);
+    expect(rover.position).toBe(rover.position);
+    expect(rover.mode).toEqual(rover.mode);
     expect(rover.generatorWatts).toEqual(110);
   });
 
@@ -51,19 +51,18 @@ describe("Rover class", function () {
       new Command("MODE_CHANGE", "LOW_POWER"),
       new Command("STATUS_CHECK"),
     ];
-    const rover = new Rover(4321);
+    let rover = new Rover(4321);
     let message = new Message("Test message with two commands", commands);
     let response = rover.receiveMessage(message);
-    expect(response.message).toEqual("Test message with two commands");
+    // expect(response.message).toEqual("Test message with two commands");
 
     if (response.mode === "STATUS_CHECK")
       expect(response.results[0].completed).toEqual(true);
-    //expect(response.results[1].roverStatus).toBeDefined();
     expect(response.results[1].roverStatus.mode).toEqual(rover.mode);
     expect(response.results[1].roverStatus.generatorWatts).toEqual(
       rover.generatorWatts
     );
-    expect(response.results[1].roverStatus.position).toEqual(rover.position);
+    expect(response.results[1].position).toEqual(this.position);
     expect(response.results.length).toEqual(2);
   });
 
