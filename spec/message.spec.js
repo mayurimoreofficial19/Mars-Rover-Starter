@@ -1,5 +1,6 @@
 const Message = require("../message.js");
 const Command = require("../command.js");
+const Rover = require("../rover.js");
 
 // NOTE: If at any time, you want to focus on the output from a single test, feel free to comment out all the others.
 //       However, do NOT edit the grading tests for any reason and make sure to un-comment out your code to get the autograder to pass.
@@ -14,17 +15,27 @@ describe("Message class", function () {
 
   //Message Test 5
   test("constructor sets name", function () {
-    expect(function () {
-      new Message(name);
-      this.name = name;
-    });
+    let commands = [
+      new Command("MODE_CHANGE", "LOW_POWER"),
+      new Command("STATUS_CHECK"),
+    ];
+    let message = new Message("Test message with two commands", commands);
+    let rover = new Rover(98382);
+    let response = rover.receiveMessage(message);
+
+    expect(message.name).toEqual("Test message with two commands");
   });
 
   //Message Test 6
   test("contains a commands array passed into the constructor as the 2nd argument", function () {
-    expect(function () {
-      new Message(Command);
-      this.Command = Command;
-    });
+    let commands = [
+      new Command("MODE_CHANGE", "LOW_POWER"),
+      new Command("STATUS_CHECK"),
+    ];
+    let message = new Message("Test message with two commands", commands);
+    let rover = new Rover(98382);
+    let response = rover.receiveMessage(message);
+
+    expect(message.commands).toEqual(commands);
   });
 });

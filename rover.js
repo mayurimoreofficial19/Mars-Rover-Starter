@@ -37,6 +37,7 @@ class Rover {
   }
 }
 
+let rover = new Rover(100);
 let commands = [
   new Command("MOVE", 4321),
   new Command("STATUS_CHECK"),
@@ -51,13 +52,7 @@ let commands = [
 // ];
 let message = new Message("Test message with two commands", commands);
 //let rover = new Rover(98382);
-let rover = new Rover(100);
 let response = rover.receiveMessage(message);
-
-console.log("{");
-for (let key in response) {
-  console.log(key + " : ", response[key]);
-}
-console.log("}");
+console.log(response);
 
 module.exports = Rover;
