@@ -53,9 +53,7 @@ describe("Rover class", function () {
     let rover = new Rover(4321);
     let message = new Message("Test message with two commands", commands);
     let response = rover.receiveMessage(message);
-    // expect(response.message).toEqual("Test message with two commands");
 
-    //if (response.mode === "STATUS_CHECK")
     expect(response.results[0].completed).toEqual(true);
     expect(response.results[1].roverStatus.mode).toEqual(rover.mode);
     expect(response.results[1].roverStatus.generatorWatts).toEqual(
@@ -90,7 +88,6 @@ describe("Rover class", function () {
     let message = new Message("Test message with two commands", commands);
     let response = rover.receiveMessage(message);
     expect(response.message).toEqual("Test message with two commands");
-    //expect(rover.mode).toEqual("LOW_POWER");
     expect(response.results[1].completed).toBeFalsy();
   });
 
