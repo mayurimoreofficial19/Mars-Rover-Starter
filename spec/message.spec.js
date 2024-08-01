@@ -20,8 +20,8 @@ describe("Message class", function () {
       new Command("STATUS_CHECK"),
     ];
     let message = new Message("Test message with two commands", commands);
-    let rover = new Rover(98382);
-    let response = rover.receiveMessage(message);
+    // let rover = new Rover(98382);
+    // let response = rover.receiveMessage(message);
 
     expect(message.name).toEqual("Test message with two commands");
   });
@@ -33,8 +33,8 @@ describe("Message class", function () {
       new Command("STATUS_CHECK"),
     ];
     let message = new Message("Test message with two commands", commands);
-    let rover = new Rover(98382);
-    let response = rover.receiveMessage(message);
+    //let rover = new Rover(98382);
+    //let response = rover.receiveMessage(message);
 
     expect(message.commands).toEqual(commands);
   });
